@@ -1,7 +1,12 @@
+import datetime
+import sys
+sys.path.append("/scratch/groups/jzeitzer/UKBB/Code/biobankAccelerometerAnalysis/")
+
+
 from accelerometer import accUtils
 accUtils.writeStudyAccProcessCmds(
-"/mnt/d/UKBiobank/Data/Scripts/cwa",
-outDir="/mnt/d/UKBiobank/Data/Scripts/out",
-cmdsFile="process-cmds.txt"
+"/scratch/groups/jzeitzer/UKBB/Data/Raw/Batch_test/",
+outDir="/scratch/groups/jzeitzer/UKBB/Data/Outputs/Batch_test/",
+cmdsFile="process-cmds_Batch_test.txt"
 )
 

@@ -1,6 +1,6 @@
 library("nparACT")
 
-imputed = "D:/UKBiobank/Data/biobankAccelerometerAnalysis/Files"
+imputed = "/scratch/groups/jzeitzer/UKBB/Data/CSV/Batch_test/"
 
 # IMPUTED
 
@@ -36,6 +36,5 @@ for (i in files){
 }
 
 print(all_data)
-setwd("D:/UKBiobank/Data/biobankAccelerometerAnalysis/Files")
+setwd("/scratch/groups/jzeitzer/UKBB/Data/IVIS/")
 write.csv(all_data, "IVIS_data_ORIGINAL.csv")
-
