@@ -1,8 +1,5 @@
 library("nparACT")
-
 imputed = "/scratch/groups/jzeitzer/UKBB/Data/CSV/Batch_test/"
-
-# IMPUTED
 
 files <- list.files(path=imputed,
                     pattern="*.csv", full.names=TRUE, recursive=FALSE)
@@ -11,13 +8,7 @@ all_data <- data.frame()
 
 counter <- 0
 
-pb <- progress::progress_bar$new(
-  format = " running imputed ivis [:bar] :percent eta: :eta",
-  total = length(files), clear = FALSE, width= 60)
-
-
 for (i in files){
-  pb$tick()
   counter <- counter + 1
   print(i)
   fullfilename <- read.csv(i)
@@ -35,6 +26,5 @@ for (i in files){
   
 }
 
-print(all_data)
 setwd("/scratch/groups/jzeitzer/UKBB/Data/IVIS/")
 write.csv(all_data, "IVIS_data_ORIGINAL.csv")
