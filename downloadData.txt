@@ -26,6 +26,9 @@ DATARAW = /scratch/groups/jzeitzer/UKBB/Data/Raw
 # Make sure directories exist
 mkdir -p $DATARAW
 
+cd $DATARAW
+
+
 
 # Copy .cwa data to DATARAW from UKBB website or wherever it's stored
 # Ask renske for code to do this
