@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for FILE in *.txt; do
+    echo ${FILE}
+    sbatch -n 1 -t 06:00:00 --wrap="./ukbfetch -b${FILE} -ak63099r43661.ukbkey"
+    sleep 1 # pause to be kind to the scheduler
+done

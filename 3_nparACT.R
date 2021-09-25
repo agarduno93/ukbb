@@ -1,5 +1,5 @@
 library("nparACT")
-imputed = "/scratch/groups/jzeitzer/UKBB/Data/CSV/Batch_test/"
+imputed = "/scratch/groups/jzeitzer/UKBB/Data/CSV/Batch_test"
 
 files <- list.files(path=imputed,
                     pattern="*.csv", full.names=TRUE, recursive=FALSE)
@@ -26,5 +26,5 @@ for (i in files){
   
 }
 
-setwd("/scratch/groups/jzeitzer/UKBB/Data/IVIS/")
-write.csv(all_data, "IVIS_data_ORIGINAL.csv")
+setwd("/scratch/groups/jzeitzer/UKBB/Data/IVIS")
+write.csv(all_data, "IVIS_data_Batch_test.csv")
