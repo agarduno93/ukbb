@@ -1,12 +1,14 @@
 import datetime
 import sys
-sys.path.append("/scratch/groups/jzeitzer/UKBB/Code/biobankAccelerometerAnalysis/")
+import os
+
+path_baa = os.getenv('CODEBAA')
+path_raw = os.getenv('DATARAW')
+path_out = os.getenv('DATAOUTPUTS')
+
+sys.path.append(path_baa)
 
 
 from accelerometer import accUtils
-accUtils.writeStudyAccProcessCmds(
-"/scratch/groups/jzeitzer/UKBB/Data/Raw/Batch_fullfile/",
-outDir="/scratch/groups/jzeitzer/UKBB/Data/Outputs/Batch_fullfile/",
-cmdsFile="processCmds.txt"
-)
+accUtils.writeStudyAccProcessCmds(path_raw,outDir=path_out,cmdsFile="processCmds.txt")
 
