@@ -1,27 +1,25 @@
 ukbb
 
+The data processing pipeline is broken down into 3 main steps:
+ 1. Download data from UKBB
+	- Pipeline functional but needs to be written to main script
+ 2. Convert data from .cwa to .csv
+	- Download biobankAccelerometryAnalysis
+	- Run the CWA2CSV.txt script to submit jobs
+ 3. Calculate IVIS from .csv
+	- In progress
 
-To download bulk data we want: 
-- Open command prompt
-- Set directory 
-- name file with datafiles (field_90001_NW5_UNREL) as input.txt OR select the amount of datafiles you want to download
-- Type: ukbfetch -binput.txt -ak63099r43661.ukbkey
+Note: See the lab google doc for more detailed info
 
-https://readthedocs.org/projects/biobankaccanalysis/downloads/pdf/latest/
 
+Archive:
 To analyze cwa to csv: 
 - Shift + enter - open linux shell here 
 - Set directory 
 - Type: python3 1_cwa_to_csv filename.cwa.gz
 
-To prepare for nparact: 
-- Run 2_npartact_prep 
-
 To run nparACT
 - Go to R-studio
 - Open 3_nparACT 
-
-
-D:\UKBiobank\Data
 
 
