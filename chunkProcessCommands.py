@@ -1,11 +1,14 @@
 import math
 
-numFiles = 115
 
 with open("processCmds.txt") as myfile:
     firstNlines=myfile.readlines()#[0:5] #put here the interval you want
 
 numLines = len(firstNlines)
+numFiles = 115
+if numLines < numFiles:
+    numFiles = numLines
+
 chunkLines = math.ceil(numLines/numFiles)
 
 for i in range (numFiles):
