@@ -5,11 +5,18 @@ numFiles = 115
 
 path_comm = os.getenv('DATACOMM')
 path_csv = os.getenv('DATACSV')
+path_IVIS = os.getenv('DATAIVIS')
 print(path_csv)
 
-files = os.listdir(path_csv)
+csv_fn = os.listdir(path_csv)
+IVIS_fn = os.listdir(path_IVIS)
 
-numLines = len(files)
+csv = [file[:-18] for file in csv_fn if file[-7:]=='.csv.gz']
+IVIS = [file[:-9] for file in IVIS_fn if file[-4:]=='.csv']
+
+new_cmds = [line + ".csv.gz" for line in csv if line not in IVIS]
+
+numLines = len(new_cmds)
 numFiles = 115
 if numLines < numFiles:
     numFiles = numLines
@@ -17,9 +24,9 @@ chunkLines = math.ceil(numLines/numFiles)
 
 for i in range (numFiles):
     if i == 0:
-        ln = files[i*chunkLines:(i+1)*chunkLines]
+        ln = new_cmds[i*chunkLines:(i+1)*chunkLines]
     else:
-        ln = files[(i*chunkLines)+1:(i+1)*chunkLines]
+        ln = new_cmds[(i*chunkLines)+1:(i+1)*chunkLines]
     #print(ln)
     filename = path_comm +'/inputcsv_' + str(i) + '.txt'
     f = open(filename, 'w')
