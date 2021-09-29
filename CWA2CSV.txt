@@ -24,7 +24,7 @@ export CODEBAA
 
 # Load modules
 module purge
-cd CODEBAA
+cd $CODEBAA
 bash utilities/downloadDataModels.sh
 pip install --upgrade pip # Upgrades pip version if required
 pip3 install --upgrade -r requirements.txt # Installs a known working set of dependencies, other package versions may also work
@@ -33,25 +33,13 @@ ml py-numpy/1.18.1_py36
 ml py-scipy/1.4.1_py36
 ml py-scikit-learn/0.24.2_py36
 ml py-pandas/1.0.3_py36
-module load java
+ml java
 javac -cp java/JTransforms-3.1-with-dependencies.jar java/*.java 
-
-#ml R
-#wget http://cran.us.r-project.org
-#R CMD INSTALL nparACT_0.8.tar.gz
 
 
 # Generate Process Commands 
 cd $DATACOMM
-python3 /scratch/groups/jzeitzer/UKBB/Code/ukbb/generateProcessCommands.py
-
-
-# Remove process commands if files already exist in $DATAOUTPUTS/timeSeries
 python3 /scratch/groups/jzeitzer/UKBB/Code/ukbb/processCommandsMod.py 
-
-
-# Chunk process commands into 115 files for submitting batches
-python3 /scratch/groups/jzeitzer/UKBB/Code/ukbb/chunkProcessCommands.py
 
 
 # Submit Jobs for converting each file to .csv
@@ -59,6 +47,5 @@ cd $CODEBAA
 for FILE in $DATACOMM/processCmds_*.txt; do
     echo ${FILE}
     sbatch -n 1 -t 1-00:00:00 --job-name=CWA2CSV --wrap="bash ${FILE}"
-    sleep 1 # pause to be kind to the job scheduler
 done
 
