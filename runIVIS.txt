@@ -10,19 +10,15 @@ export DATAIVIS
 DATACSV=/scratch/groups/jzeitzer/UKBB/Data/Outputs/Batch_fullfiles/timeSeries
 export DATACSV
 
+cd $DATACSV
 while IFS= read -r LINE
 do
 
-    echo "$FILE :: $LINE"
+#    echo "$FILE :: $LINE"
 
     BASELINE="$DATACSV/${LINE}"
     export BASELINE
     echo $BASELINE
     R < /scratch/groups/jzeitzer/UKBB/Code/ukbb/calcIVIS.R --save
-
-#    for csvfn in $DATACSV/$BASELINE*; do
-#        export csvfn
-#        R < /scratch/groups/jzeitzer/UKBB/Code/ukbb/calcIVIS.R --save
-#    done 
 
 done < "$FILE"

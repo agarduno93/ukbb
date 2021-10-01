@@ -30,24 +30,31 @@ sfol =  "\"" +path_out + "/stationary" + "\""
 rawfol =  "\"" +path_out + "/raw" + "\""
 npyfol =  "\"" +path_out + "/npy" + "\""
 proCmds = []
+print("New Lines")
 for nl in new_cmds:
-    fullfn = "\"" +path_raw + "/" + nl + "\""
-    proCmds.append("python3 accProcess.py " + fullfn + " --summaryFolder " + sumfol + " --epochFolder " + epfol + " --timeSeriesFolder " + tsfol + " --nonWearFolder " + nwfol + " --stationaryFolder " + sfol + " --rawFolder " + rawfol + " --npyFolder " + npyfol + " --outputFolder " + path_out + "\n")
+    fullfn = "\"" +path_raw + "/" +  nl + "\""
+    new_line = "python3 accProcess.py " + fullfn + " --summaryFolder " + sumfol + " --epochFolder " + epfol + " --timeSeriesFolder " + tsfol + " --nonWearFolder " + nwfol + " --stationaryFolder " + sfol + " --rawFolder " + rawfol + " --npyFolder " + npyfol + " --outputFolder " + path_out + "\n"
+    proCmds.append(new_line)
 
 print(len(proCmds))
 
 # Determine number of files for parallelization
 numLines = len(proCmds)
+print("numLines" + str(numLines))
 numFiles = 115
 if numLines < numFiles:
     numFiles = numLines
+print("numFiles" + str(numFiles))
 chunkLines = math.ceil(numLines/numFiles)
-
+print("chunks" + str(chunkLines))
 for i in range (numFiles):
-    if i == 0:
-        ln = proCmds[i*chunkLines:(i+1)*chunkLines]
+    if chunkLines > 1:
+        if i == 0:
+            ln = proCmds[i*chunkLines:(i+1)*chunkLines]
+        else:
+            ln = proCmds[(i*chunkLines)+1:(i+1)*chunkLines]
     else:
-        ln = proCmds[(i*chunkLines)+1:(i+1)*chunkLines]
+        ln = proCmds[i]
     filename = 'processCmds_' + str(i) + '.txt'
     f = open(filename, 'w')
     f.writelines( "%s" % item for item in ln )

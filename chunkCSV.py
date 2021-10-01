@@ -14,21 +14,27 @@ IVIS_fn = os.listdir(path_IVIS)
 csv = [file[:-18] for file in csv_fn if file[-7:]=='.csv.gz']
 IVIS = [file[:-9] for file in IVIS_fn if file[-4:]=='.csv']
 
-new_cmds = [line + ".csv.gz" for line in csv if line not in IVIS]
+new_cmds = [line + "-timeSeries.csv.gz" for line in csv if line not in IVIS]
 
 numLines = len(new_cmds)
-numFiles = 115
-if numLines < numFiles:
-    numFiles = numLines
-chunkLines = math.ceil(numLines/numFiles)
-
-for i in range (numFiles):
-    if i == 0:
-        ln = new_cmds[i*chunkLines:(i+1)*chunkLines]
-    else:
-        ln = new_cmds[(i*chunkLines)+1:(i+1)*chunkLines]
-    #print(ln)
-    filename = path_comm +'/inputcsv_' + str(i) + '.txt'
-    f = open(filename, 'w')
-    f.writelines( "%s\n" % item for item in ln )
-    f.close()
+print(numLines)
+if numLines > 1:
+    if numLines < numFiles:
+        numFiles = numLines
+    chunkLines = math.ceil(numLines/numFiles)
+    if chunkLines>1:
+        for i in range (numFiles):
+            if i == 0:
+                ln = new_cmds[i*chunkLines:(i+1)*chunkLines]
+            else:
+                ln = new_cmds[(i*chunkLines)+1:(i+1)*chunkLines]
+            filename = path_comm +'/inputcsv_' + str(i) + '.txt'
+            f = open(filename, 'w')
+            f.writelines( "%s\n" % item for item in ln )
+            f.close()
+    else:            
+        ln = new_cmds
+        filename = path_comm +'/inputcsv_0.txt'
+        f = open(filename, 'w')
+        f.writelines( "%s\n" % item for item in ln )
+        f.close()

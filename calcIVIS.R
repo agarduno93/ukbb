@@ -2,7 +2,6 @@ library("nparACT")
  
 all_data <- data.frame()
 
-
 fullfilename <- Sys.getenv("BASELINE")
 data_all <- read.csv(gzfile(fullfilename))
 data <- subset(data_all, select=c("time", "acc"))

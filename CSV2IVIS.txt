@@ -21,9 +21,13 @@ mkdir -p $DATACOMM
 
 # Load modules
 ml R
-#wget http://cran.us.r-project.org
-#R CMD INSTALL nparACT_0.8.tar.gz
-
+wget http://cran.us.r-project.org
+ml python/3.6.1
+ml py-numpy/1.18.1_py36
+ml py-scipy/1.4.1_py36
+ml py-scikit-learn/0.24.2_py36
+ml py-pandas/1.0.3_py36
+R CMD INSTALL nparACT_0.8.tar.gz
 
 # Generate input files 
 cd $DATACOMM
