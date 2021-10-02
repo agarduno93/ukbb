@@ -1,10 +1,30 @@
 #!/bin/bash
 
+# Set Environment variables
+DATARAW=/scratch/groups/jzeitzer/UKBB/Data/Raw/Batch_rest/
+DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands/Batch_rest/
+INPUT=/scratch/groups/jzeitzer/UKBB/Data/Commands/Batch_rest/inputRest.txt
 
+# Export Environment variables
+export DATARAW
+export DATACOMM
+export INPUT
 
+# Chunk input file into 10 jobs
+python3 /scratch/groups/jzeitzer/UKBB/Code/ukbb/chunkInput.py
 
-for FILE in *.txt; do
-    echo ${FILE}
-    sbatch -n 1 -t 18:00:00 --wrap="./ukbfetch -b${FILE} -ak63099r43661.ukbkey"
-    sleep 1 # pause to be kind to the scheduler
+cd $DATARAW
+N=0
+for i in $(seq 1 $NUMINPUT);
+    for FILE in input_*.txt; do
+        echo ${FILE}
+        if [ $N \> 9 ];
+        then
+            Nm=$((N - 10))
+            sbatch -n 1 -t 18:00:00 --wrap="./ukbfetch -b${FILE} -ak63099r43661.ukbkey" --job-name=getDATA_${N} --dependency=afterany:getDATA_${Nm}
+        else
+            sbatch -n 1 -t 18:00:00 --wrap="./ukbfetch -b${FILE} -ak63099r43661.ukbkey" --job-name=getDATA_${N}
+        fi;
+        N=$((N + 1))
+    done
 done
