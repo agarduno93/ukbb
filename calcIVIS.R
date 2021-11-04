@@ -11,7 +11,7 @@ filename <- filename[[1]][length(filename[[1]])]
 if (grepl("ZERODIV", fullfilename)) {
   all_data <- rbind(all_data, cbind(filename = fullfilename, setNames(data.frame(matrix(ncol = 7, nrow = 1)), c("IS", "IV", "RA", "L5", "L5_starttime", "M10", "M10_starttime"))))
 } else {
-  single_result <- nparACT_base("data", SR = 2/60, plot = F)
+  single_result <- nparACT_base("data", SR = 2/60, plot = F,fulldays = F)
   print(single_result)
   single_result <- cbind(filename = filename, single_result)
   all_data <- rbind(all_data, single_result)

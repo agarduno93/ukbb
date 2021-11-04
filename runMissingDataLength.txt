@@ -16,6 +16,6 @@ do
     BASELINE="${LINE}"
     export BASELINE
     echo $BASELINE
-    R < /scratch/groups/jzeitzer/UKBB/Code/ukbb/missingDataCheck.R --save
+    R < /scratch/groups/jzeitzer/UKBB/Code/ukbb/missingDataLength.R --save
 
 done < "$FILE"

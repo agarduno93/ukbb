@@ -4,23 +4,30 @@
 #SBATCH --job-name=processCmds
 
 # Set file paths
-DATARAW=/scratch/groups/jzeitzer/UKBB/Data/Raw/Batch_fullfiles
-DATAOUTPUTS=/scratch/groups/jzeitzer/UKBB/Data/Outputs/Batch_fullfiles
-DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands/Batch_fullfiles
+DATARAW=/scratch/groups/jzeitzer/UKBB/Data/Raw/Batch_rest
+DATAOUTPUTS=/scratch/groups/jzeitzer/UKBB/Data/Outputs/Batch_rest
+DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands/Batch_rest
 CODEBAA=/scratch/groups/jzeitzer/UKBB/Code/biobankAccelerometerAnalysis
-
+DATACSV=/scratch/groups/jzeitzer/UKBB/Data/Outputs/Batch_rest/timeSeries
 
 # Make sure directories exist
 mkdir -p $DATARAW
 mkdir -p $DATAOUTPUTS
 mkdir -p $DATACOMM
-
+mkdir -p $DATACSV
+mkdir -p $DATAOUTPUTS/summary  
+mkdir -p $DATAOUTPUTS/epoch        
+mkdir -p $DATAOUTPUTS/nonWear  
+mkdir -p $DATAOUTPUTS/stationary  
+mkdir -p $DATAOUTPUTS/raw  
+mkdir -p $DATAOUTPUTS/npy  
 
 # Export environment variables
 export DATARAW
 export DATAOUTPUTS
 export DATACOMM
 export CODEBAA
+export DATACSV
 
 # Load modules
 module purge

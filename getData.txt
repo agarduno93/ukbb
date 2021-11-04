@@ -14,17 +14,16 @@ export INPUT
 python3 /scratch/groups/jzeitzer/UKBB/Code/ukbb/chunkInput.py
 
 cd $DATARAW
-N=0
-for i in $(seq 1 $NUMINPUT);
-    for FILE in input_*.txt; do
+
+for i in $(seq 0 $(( ${NUMINPUT} - 1 ))); do
+    for FILE in input_$i.txt; do
         echo ${FILE}
-        if [ $N \> 9 ];
+        if [ $i \> 9 ];
         then
-            Nm=$((N - 10))
-            sbatch -n 1 -t 18:00:00 --wrap="./ukbfetch -b${FILE} -ak63099r43661.ukbkey" --job-name=getDATA_${N} --dependency=afterany:getDATA_${Nm}
+            Nm=$(($i - 10))
+            sbatch -n 1 -t 18:00:00 --wrap="./ukbfetch -b${FILE} -ak63099r43661.ukbkey" --job-name=getDATA_${i} --dependency=afterany:getDATA_${Nm}
         else
-            sbatch -n 1 -t 18:00:00 --wrap="./ukbfetch -b${FILE} -ak63099r43661.ukbkey" --job-name=getDATA_${N}
+            sbatch -n 1 -t 18:00:00 --wrap="./ukbfetch -b${FILE} -ak63099r43661.ukbkey" --job-name=getDATA_${i}
         fi;
-        N=$((N + 1))
     done
 done
