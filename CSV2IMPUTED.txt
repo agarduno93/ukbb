@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Set file paths
+DATAIMP=/scratch/groups/jzeitzer/UKBB/Data/Imputed
+DATACSV=/scratch/groups/jzeitzer/UKBB/Data/Outputs/Batch_fullfiles/timeSeries
+DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands/Batch_fullfiles
+CODEUKBB=/scratch/groups/jzeitzer/UKBB/Code/ukbb
+
+# Export environment variables
+export DATAIMP
+export DATACSV
+export DATACOMM
+export CODEUKBB
+
+# Make sure directories exist
+mkdir -p $DATAIMP
+mkdir -p $DATACSV
+mkdir -p $DATACOMM
+
+# Load modules
+ml R
+wget http://cran.us.r-project.org
+ml python/3.6.1
+ml py-numpy/1.18.1_py36
+ml py-scipy/1.4.1_py36
+ml py-scikit-learn/0.24.2_py36
+ml py-pandas/1.0.3_py36
+
+# Generate input files 
+cd $DATACOMM
+python3 /scratch/groups/jzeitzer/UKBB/Code/ukbb/chunkIMP.py
+
+# 
+cd $UKBB
+for FILE in $DATACOMM/inputimp_*.txt; do
+    echo ${FILE}
+    export FILE
+    sbatch -n 1 -t 1-00:00:00 --job-name=CSV2IMPUTED --wrap="bash /scratch/groups/jzeitzer/UKBB/Code/ukbb/runIVIS.txt"
+done
+
+#
