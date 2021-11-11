@@ -5,14 +5,12 @@ numFiles = 115
 
 path_comm = os.getenv('DATACOMM')
 path_csv = os.getenv('DATACSV')
-path_imp = os.getenv('DATAIMP')
 print(path_csv)
 
 csv_fn = os.listdir(path_csv)
-imp_fn = os.listdir(path_imp)
 
 csv = [file[:-18] for file in csv_fn if file[-7:]=='.csv.gz']
-imp = [file[:-9] for file in imp_fn if file[-4:]=='.csv']
+imp = [file[:-15] for file in csv_fn if file[-4:]=='.csv']
 
 new_cmds = [line + "-timeSeries.csv.gz" for line in csv if line not in imp]
 
@@ -34,7 +32,7 @@ if numLines > 1:
             f.close()
     else:            
         ln = new_cmds
-        filename = path_comm +'/inputimp_*.txt'
+        filename = path_comm +'/inputImp_1.txt'
         f = open(filename, 'w')
         f.writelines( "%s\n" % item for item in ln )
         f.close()
