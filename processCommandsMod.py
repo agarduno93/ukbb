@@ -16,7 +16,7 @@ csv_fn = os.listdir(path_csv)
 
 # Only select certain file types
 cwa = [file[:-4] for file in cwa_fn if file[-4:]=='.cwa']
-csv = [file[:-18] for file in csv_fn if file[-7:]=='.csv.gz']
+csv = [file[:-18] for file in csv_fn if file[-7:]=='.csv']
 
 # Select cwa files that have not already been converted
 new_cmds = [line + ".cwa" for line in cwa if line not in csv]

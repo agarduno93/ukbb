@@ -30,7 +30,7 @@ for i = 1:length(fns)
         else
             dt.acc_med = dt.acc;
         end
-        writetable(dt,fullfile(dpath,sprintf('%s-timeSeries.csv',fns{i})),'Delimiter',',')
+        writetable(dt,fullfile(dpath,fns{i}),'Delimiter',',')
     catch
     end
 end

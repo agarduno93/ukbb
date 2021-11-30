@@ -4,7 +4,7 @@ import os
 import numpy
 import pandas as pd
 
-path_in = os.getenv('DATAMISSING')
+path_in = os.getenv('DATAMDY')
 in_fn = os.listdir(path_in)
 
 n = 0
@@ -21,7 +21,6 @@ for file in in_fn:
     n+=1
 
 col_names = list(df.columns)
-del df[col_names[0]]
 
-df.to_csv(path_in + "/" + 'Batch_rest_masterMissing.csv',index=False)
+df.to_csv(path_in + "/" + 'masterMDY.csv',index=False)
 

@@ -1,4 +1,5 @@
 %% Sherlock Mean Day
+ 
 
 %% Paths
 dpath = getenv('DATACSV');
@@ -15,7 +16,6 @@ fns = importdata(fcomm);
 
 % Loop through list of files
 for i = 1:length(fns)
-    try
         dt = readtable(fullfile(dpath,fns{i}),'Delimiter', ',');
         dt2 = readtable(fullfile(dpath,fns{i}));
         ttt=[];
@@ -23,18 +23,27 @@ for i = 1:length(fns)
             ttt = [ttt;datetime(dt2.Var1(jj)) + duration(dt2.Var2{jj}(1:12))];
         end
         
-        dt.acc_med
         tmins = 60*hour(ttt)+minute(ttt)+(second(ttt)./60);
         times = unique(tmins);
-        
+
+	
+	if ~ismember('acc_med',dt.Properties.VariableNames)
+            if sum(dt.imputed)>0
+                gaps = gapDur(~dt.imputed);
+                medianimputed = medianImputation(dt.acc,ttt,gaps);
+                dt.acc_med = medianimputed;
+            else
+                dt.acc_med = dt.acc;
+            end
+            writetable(dt,fullfile(dpath,sprintf('%s-timeSeries.csv',fns{i})),'Delimiter',',')
+        end
+
         dayMin = nan(1,length(times)); 
         for j = 1:length(times)
-            dayMin(j) = mean(act(tmins == times(j)));
+            dayMin(j) = mean(dt.acc_med(tmins == times(j)));
         end 
         Subject =  {fns{i}(1:end-15)};   
         T = [table(Subject),array2table(dayMin)];
 
-        writetable(T,fullfile(avgDaypath,sprintf('%s-avgDay.csv',Subject)),'Delimiter',',')
-    catch
-    end
+        writetable(T,fullfile(avgDaypath,sprintf('%s-avgDay.csv',Subject{1})),'Delimiter',',');
 end
