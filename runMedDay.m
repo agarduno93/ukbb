@@ -1,9 +1,10 @@
 %% Sherlock Mean Day
+
  
 
 %% Paths
 dpath = getenv('DATACSV');
-avgDaypath = getenv('DATAAVGDAY');
+medDaypath = getenv('DATAMEDDAY');
 dcode = getenv('CODEUKBB');
 dcomm = getenv('DATACOMM');
 fcomm = getenv('FILE');
@@ -40,10 +41,10 @@ for i = 1:length(fns)
 
         dayMin = nan(1,length(times)); 
         for j = 1:length(times)
-            dayMin(j) = mean(dt.acc_med(tmins == times(j)));
+            dayMin(j) = median(dt.acc_med(tmins == times(j)));
         end 
         Subject =  {fns{i}(1:end-15)};   
         T = [table(Subject),array2table(dayMin)];
 
-        writetable(T,fullfile(medDaypath,sprintf('%s-avgDay.csv',Subject{1})),'Delimiter',',');
+        writetable(T,fullfile(medDaypath,sprintf('%s-MedDay.csv',Subject{1})),'Delimiter',',');
 end

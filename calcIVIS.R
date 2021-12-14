@@ -3,8 +3,8 @@ library("nparACT")
 all_data <- data.frame()
 
 fullfilename <- Sys.getenv("BASELINE")
-data_all <- read.csv(gzfile(fullfilename))
-data <- subset(data_all, select=c("time", "acc"))
+data_all <- read.csv(fullfilename)  #gzfile(fullfilename))
+data <- subset(data_all, select=c("time", "acc_med"))
 filename <- strsplit(fullfilename, split = "/")
 filename <- filename[[1]][length(filename[[1]])]
   

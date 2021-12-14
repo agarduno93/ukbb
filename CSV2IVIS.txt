@@ -3,9 +3,9 @@
 #SBATCH --job-name=processCmds
 
 # Set file paths
-DATAIVIS=/scratch/groups/jzeitzer/UKBB/Data/IVIS/Batch_fullfiles
-DATACSV=/scratch/groups/jzeitzer/UKBB/Data/Outputs/Batch_fullfiles/timeSeries
-DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands/Batch_fullfiles
+DATAIVIS=/scratch/groups/jzeitzer/UKBB/Data/IVIS
+DATACSV=/scratch/groups/jzeitzer/UKBB/Data/Outputs/timeSeries
+DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands
 CODEUKBB=/scratch/groups/jzeitzer/UKBB/Code/ukbb
 
 # Export environment variables
@@ -20,21 +20,20 @@ mkdir -p $DATACSV
 mkdir -p $DATACOMM
 
 # Load modules
-ml R
-wget http://cran.us.r-project.org
-ml python/3.6.1
+ml python/3.6 #.1
 ml py-numpy/1.18.1_py36
 ml py-scipy/1.4.1_py36
 ml py-scikit-learn/0.24.2_py36
 ml py-pandas/1.0.3_py36
+ml R
+wget http://cran.us.r-project.org
 R CMD INSTALL nparACT_0.8.tar.gz
 
 # Generate input files 
 cd $DATACOMM
 python3 /scratch/groups/jzeitzer/UKBB/Code/ukbb/chunkCSV.py
 
-# 
-cd $UKBB
+cd $CODEUKBB
 for FILE in $DATACOMM/inputcsv_*.txt; do
     echo ${FILE}
     export FILE

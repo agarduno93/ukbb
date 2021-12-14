@@ -1,20 +1,13 @@
 #!/bin/bash
-# Code to unzip csv, calculate IVIS, and rezip files
+# calculate IVIS
 
 ml R
-#wget http://cran.us.r-project.org
-#R CMD INSTALL nparACT_0.8.tar.gz
-
-DATAIVIS=/scratch/groups/jzeitzer/UKBB/Data/IVIS/Batch_fullfiles
-export DATAIVIS
-DATACSV=/scratch/groups/jzeitzer/UKBB/Data/Outputs/Batch_fullfiles/timeSeries
-export DATACSV
+wget http://cran.us.r-project.org
+R CMD INSTALL nparACT_0.8.tar.gz
 
 cd $DATACSV
 while IFS= read -r LINE
 do
-
-#    echo "$FILE :: $LINE"
 
     BASELINE="$DATACSV/${LINE}"
     export BASELINE

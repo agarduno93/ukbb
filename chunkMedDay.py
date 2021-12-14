@@ -5,16 +5,16 @@ numFiles = 115
 
 path_comm = os.getenv('DATACOMM')
 path_csv = os.getenv('DATACSV')
-path_szn = os.getenv('DATAAVGDAY')
+path_szn = os.getenv('DATAMEDDAY')
 print(path_csv)
 
 csv_fn = os.listdir(path_csv)
-avgday_fn = os.listdir(path_szn)
+medday_fn = os.listdir(path_szn)
 
 csv = [file[:-15] for file in csv_fn if file[-4:]=='.csv']
-avgday = [file[:-11] for file in avgday_fn if file[-4:]=='.csv']
+medday = [file[:-11] for file in medday_fn if file[-4:]=='.csv']
 
-new_cmds = [line + "-timeSeries.csv" for line in csv if line not in avgday]
+new_cmds = [line + "-timeSeries.csv" for line in csv if line not in medday]
 
 numLines = len(new_cmds)
 print(numLines)
@@ -28,13 +28,13 @@ if numLines > 1:
                 ln = new_cmds[i*chunkLines:(i+1)*chunkLines]
             else:
                 ln = new_cmds[(i*chunkLines)+1:(i+1)*chunkLines]
-            filename = path_comm +'/inputSZN_' + str(i) + '.txt'
+            filename = path_comm +'/inputMedDay_' + str(i) + '.txt'
             f = open(filename, 'w')
             f.writelines( "%s\n" % item for item in ln )
             f.close()
     else:            
         ln = new_cmds
-        filename = path_comm +'/inputSZN_1.txt'
+        filename = path_comm +'/inputMedDay_1.txt'
         f = open(filename, 'w')
         f.writelines( "%s\n" % item for item in ln )
         f.close()

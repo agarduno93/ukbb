@@ -5,16 +5,16 @@ numFiles = 115
 
 path_comm = os.getenv('DATACOMM')
 path_csv = os.getenv('DATACSV')
-path_IVIS = os.getenv('DATAIVIS')
+path_ivis = os.getenv('DATAIVIS')
 print(path_csv)
 
 csv_fn = os.listdir(path_csv)
-IVIS_fn = os.listdir(path_IVIS)
+ivis_fn = os.listdir(path_ivis)
 
-csv = [file[:-18] for file in csv_fn if file[-7:]=='.csv.gz']
-IVIS = [file[:-9] for file in IVIS_fn if file[-4:]=='.csv']
+csv = [file[:-15] for file in csv_fn if file[-4:]=='.csv']
+ivis = [file[:-9] for file in ivis_fn if file[-4:]=='.csv']
 
-new_cmds = [line + "-timeSeries.csv.gz" for line in csv if line not in IVIS]
+new_cmds = [line + "-timeSeries.csv" for line in csv if line not in ivis]
 
 numLines = len(new_cmds)
 print(numLines)
@@ -34,7 +34,7 @@ if numLines > 1:
             f.close()
     else:            
         ln = new_cmds
-        filename = path_comm +'/inputcsv_*.txt'
+        filename = path_comm +'/inputcsv_1.txt'
         f = open(filename, 'w')
         f.writelines( "%s\n" % item for item in ln )
         f.close()

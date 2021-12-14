@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Set file paths
-DATACSV=/scratch/groups/jzeitzer/UKBB/Data/Outputs/Batch_rest/timeSeries
+DATACSV=/scratch/groups/jzeitzer/UKBB/Data/Outputs/timeSeries
 DATAAVGDAY=/scratch/groups/jzeitzer/UKBB/Data/AvgDay
-DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands/Batch_rest
+DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands/
 CODEUKBB=/scratch/groups/jzeitzer/UKBB/Code/ukbb
 
 # Export environment variables
@@ -23,7 +23,7 @@ python3 /scratch/groups/jzeitzer/UKBB/Code/ukbb/chunkAvgDay.py
 
 # 
 cd $CODEUKBB
-for FILE in $DATACOMM/inputAvgDay_*.txt; do
+for FILE in $DATACOMM/inputSZN_*.txt; do
     echo ${FILE}
     export FILE
     sbatch -n 1 -t 1-00:00:00 --job-name=CSV2AVGDAY --wrap="bash /scratch/groups/jzeitzer/UKBB/Code/ukbb/runAvgDay.txt"

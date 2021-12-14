@@ -4,7 +4,7 @@ import os
 import numpy
 import pandas as pd
 
-path_in = os.getenv('DATAMDY')
+path_in = os.getenv('DATAIVIS')
 in_fn = os.listdir(path_in)
 
 n = 0
@@ -22,5 +22,5 @@ for file in in_fn:
 
 col_names = list(df.columns)
 
-df.to_csv(path_in + "/" + 'masterMDY.csv',index=False)
+df.to_csv(path_in + "/" + 'masterIVIS.csv',index=False)
 

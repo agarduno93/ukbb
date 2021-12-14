@@ -2,7 +2,6 @@ import os
 import math
 
 inputfile = os.getenv('INPUT')
-path_comm = os.getenv('DATACOMM')
 path_raw = os.getenv('DATARAW')
 
 with open(inputfile) as myfile:

@@ -2,26 +2,29 @@
 
 # Set file paths
 DATACSV=/scratch/groups/jzeitzer/UKBB/Data/Outputs/timeSeries
-DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands/
+DATAMEDDAY=/scratch/groups/jzeitzer/UKBB/Data/MedDay
+DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands
 CODEUKBB=/scratch/groups/jzeitzer/UKBB/Code/ukbb
 
 # Export environment variables
 export DATACSV
 export DATACOMM
 export CODEUKBB
+export DATAMEDDAY
 
 # Make sure directories exist
 mkdir -p $DATACSV
 mkdir -p $DATACOMM
+mkdir -p $DATAMEDDAY
 
 # Generate input files 
 cd $DATACOMM
-python3 /scratch/groups/jzeitzer/UKBB/Code/ukbb/chunkIMP.py
+python3 /scratch/groups/jzeitzer/UKBB/Code/ukbb/chunkMedDay.py
 
 # 
 cd $CODEUKBB
-for FILE in $DATACOMM/inputImp_*.txt; do
+for FILE in $DATACOMM/inputMedDay_*.txt; do
     echo ${FILE}
     export FILE
-    sbatch -n 1 -t 1-00:00:00 --job-name=CSV2IMPUTED --wrap="bash /scratch/groups/jzeitzer/UKBB/Code/ukbb/runMedImp.txt"
+    sbatch -n 1 -t 1-00:00:00 --job-name=CSV2MEDDAY --wrap="bash /scratch/groups/jzeitzer/UKBB/Code/ukbb/runMedDay.txt"
 done

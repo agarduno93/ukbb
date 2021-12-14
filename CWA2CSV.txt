@@ -4,11 +4,11 @@
 #SBATCH --job-name=processCmds
 
 # Set file paths
-DATARAW=/scratch/groups/jzeitzer/UKBB/Data/Raw/Batch_rest
-DATAOUTPUTS=/scratch/groups/jzeitzer/UKBB/Data/Outputs/Batch_rest
-DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands/Batch_rest
+DATARAW=/scratch/groups/jzeitzer/UKBB/Data/Raw/
+DATAOUTPUTS=/scratch/groups/jzeitzer/UKBB/Data/Outputs/
+DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands/
 CODEBAA=/scratch/groups/jzeitzer/UKBB/Code/biobankAccelerometerAnalysis
-DATACSV=/scratch/groups/jzeitzer/UKBB/Data/Outputs/Batch_rest/timeSeries
+DATACSV=/scratch/groups/jzeitzer/UKBB/Data/Outputs/timeSeries
 
 # Make sure directories exist
 mkdir -p $DATARAW
