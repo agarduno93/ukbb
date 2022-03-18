@@ -1,0 +1,16 @@
+#!/bin/bash
+# calculate Cosinor Analysis
+
+ml R/4.1.2
+R -e "install.packages("dplyr");install.packages("lubridate");install.packages("padr");install.packages("ActCR");install.packages("cosinor");install.packages("cosinor2");install.packages("minpack.lm")"
+
+cd $DATACSV
+while IFS= read -r LINE
+do
+
+    BASELINE="$DATACSV/${LINE}"
+    export BASELINE
+    echo $BASELINE
+    R < /scratch/groups/jzeitzer/UKBB/Code/ukbb/calcCos.R --save
+
+done < "$FILE"

@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Set file paths
+DATACSV=/scratch/groups/jzeitzer/UKBB/Data/Outputs/timeSeries
+DATAACTDIST=/scratch/groups/jzeitzer/UKBB/Data/ACTDIST
+DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands
+CODEUKBB=/scratch/groups/jzeitzer/UKBB/Code/ukbb
+
+# Export environment variables
+export DATACSV
+export DATACOMM
+export CODEUKBB
+export DATAACTDIST
+
+# Make sure directories exist
+mkdir -p $DATACSV
+mkdir -p $DATACOMM
+mkdir -p $DATAACTDIST
+
+# Generate input files 
+cd $DATACOMM
+python3 /scratch/groups/jzeitzer/UKBB/Code/ukbb/chunkActDist.py
+
+# 
+cd $CODEUKBB
+for FILE in $DATACOMM/inputActDist_*.txt; do
+    echo ${FILE}
+    export FILE
+    sbatch -n 1 -t 1-00:00:00 --job-name=CSV2MEDDAY --wrap="bash /scratch/groups/jzeitzer/UKBB/Code/ukbb/runActDist.txt"
+done

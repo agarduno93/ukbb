@@ -1,0 +1,53 @@
+#!/bin/bash
+#SBATCH --time=01:00:00
+#SBATCH --job-name=processCmds
+
+
+# Set file paths
+DATACOS=/scratch/groups/jzeitzer/UKBB/Data/Cosinor
+DATACSV=/scratch/groups/jzeitzer/UKBB/Data/Outputs/timeSeries
+DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands
+CODEUKBB=/scratch/groups/jzeitzer/UKBB/Code/ukbb
+
+# Export environment variables
+export DATACOS
+export DATACSV
+export DATACOMM
+export CODEUKBB
+
+# Make sure directories exist
+mkdir -p $DATACOS
+mkdir -p $DATACSV
+mkdir -p $DATACOMM
+
+# Load modules
+ml python/3.6 #.1
+ml py-numpy/1.18.1_py36
+ml py-scipy/1.4.1_py36
+ml py-scikit-learn/0.24.2_py36
+ml py-pandas/1.0.3_py36
+
+# Load R packages
+ml R/4.1.2
+wget http://cran.us.r-project.org
+R CMD install nparACT_0.8.tar.gz
+R CMD install cosinor2_0.2.1.tar.gz
+R CMD install ActCR_0.2.0.tar.gz
+R CMD install dplyr_1.0.7.tar.gz
+R CMD install lubridate_1.8.0.tar.gz
+R CMD install padr_0.6.0.tar.gz
+
+
+# Generate input files 
+cd $DATACOMM
+python3 /scratch/groups/jzeitzer/UKBB/Code/ukbb/chunkCos.py
+
+cd $CODEUKBB
+for FILE in $DATACOMM/inputcos_*.txt; do
+    echo ${FILE}
+    export FILE
+    sbatch -n 1 -t 1-00:00:00 --job-name=CSV2COS --wrap="bash /scratch/groups/jzeitzer/UKBB/Code/ukbb/runCos.txt"
+done
+
+
+
