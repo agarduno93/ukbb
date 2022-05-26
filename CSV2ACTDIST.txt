@@ -26,5 +26,5 @@ cd $CODEUKBB
 for FILE in $DATACOMM/inputActDist_*.txt; do
     echo ${FILE}
     export FILE
-    sbatch -n 1 -t 1-00:00:00 --job-name=CSV2MEDDAY --wrap="bash /scratch/groups/jzeitzer/UKBB/Code/ukbb/runActDist.txt"
+    sbatch -n 1 -t 2-00:00:00 --job-name=CSV2ACTDIST --wrap="bash /scratch/groups/jzeitzer/UKBB/Code/ukbb/runActDist.txt"
 done

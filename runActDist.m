@@ -10,12 +10,6 @@ fcomm = getenv('FILE');
 % Get list of files to run
 fns = importdata(fcomm);
 
-% number of parallel pool workers (usually 20 for 1 node on sherlock)
-%parpool('local', 20, 'AttachedFiles', {fullfile(dcode,'gapDur.m'),fullfile(dcode,'medianImputation.m')})
-
-% Pre-allocate Distribution 
-ActDist = [[1:length([0:20:4000])];zeros(1,length([0:20:4000]))]';
-
 % Loop through list of files
 for i = 1:length(fns)
     % Load Data
@@ -41,21 +35,24 @@ for i = 1:length(fns)
         writetable(dt,fullfile(dpath,fns{i}),'Delimiter',',')
     end
 
-    Y = discretize(dt.acc_med,[0:20:4000]);
-	T = tabulate(Y);
-	TT = array2table(T(:,1:2),'VariableNames',{'BinNum','Count'});
-	Subject =  {fns{i}(1:end-15)};
-    writetable(TT,fullfile(actDistpath,sprintf('%s-ActDist.csv',Subject{1})),'Delimiter',',');
-    
-    for j = 1:size(T,1)
-        ind = find(ActDist(:,1) == T(j,1));
-        ActDist(ind,2) = ActDist(ind,2) + T(j,2);
-    end 
-end
+    % Pre-allocate Distribution 
+    ActDist_Bins = zeros(1,length([0:20:4000,100000])); 
 
-TTact = array2table(ActDist(:,1:2),'VariableNames',{'BinNum','Count'});
-writetable(TTact,fullfile(actDistpath,'masterActDist.csv'),'Delimiter',',');
-    
+    Y = discretize(dt.acc_med,[0:20:4000,100000]);
+    T = tabulate(Y);
+    ActDist_inds = 1:length([0:20:4000,100000]);
+
+    for j = 1:size(T,1)
+        ind = find(ActDist_inds == T(j,1));
+        ActDist_Bins(ind) = ActDist_Bins(ind) + T(j,2);
+    end 
+
+    TT = [array2table(ActDist_Bins)];
+
+    Subject =  {fns{i}(1:end-15)};
+    writetable(TT,fullfile(actDistpath,sprintf('%s-ActDist.csv',Subject{1})),'Delimiter',',');
+     
+end
 
 
 

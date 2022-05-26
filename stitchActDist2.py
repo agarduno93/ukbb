@@ -4,16 +4,19 @@ import os
 import numpy
 import pandas as pd
 
-path_in = os.getenv('DATAMEDDAY')
+path_in = os.getenv('DATAACTDIST')
 in_fn = os.listdir(path_in)
 
 n = 0
 for file in in_fn:
-    print("N is " + str(n))
+    #print("N is " + str(n))
     try:
         if 'df' in locals():
             dfapp = pd.read_csv(path_in + "/" + file)
-            df = df.append(dfapp,ignore_index=True)
+            if dfapp.shape == (1,202):
+                df = df.add(dfapp)
+            else:
+                print("Shape Error: " + file)
         else:
             df = pd.read_csv(path_in + "/" + file)
     except:
@@ -22,5 +25,5 @@ for file in in_fn:
 
 col_names = list(df.columns)
 
-df.to_csv(path_in + "/" + 'masterMedDay.csv',index=False)
+df.to_csv(path_in + "/" + 'masterActDist.csv',index=False)
 

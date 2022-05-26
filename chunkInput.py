@@ -1,5 +1,6 @@
 import os
 import math
+import subprocess
 
 inputfile = os.getenv('INPUT')
 path_raw = os.getenv('DATARAW')
@@ -29,4 +30,6 @@ for i in range (numFiles):
     f.writelines( "%s" % item for item in ln )
     f.close()
 
-os.environ["NUMINPUT"] = str(chunkLines)
+os.environ["NUMINPUT"] = str(numFiles)
+subprocess.call('export NUMINPUT', shell=True)
+print(numFiles)

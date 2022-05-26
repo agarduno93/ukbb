@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Set Environment variables
-DATARAW=/scratch/groups/jzeitzer/UKBB/Data/Raw/Batch_rest/
-DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands/Batch_rest/
-INPUT=/scratch/groups/jzeitzer/UKBB/Data/Commands/Batch_rest/inputRest.txt
+DATARAW=/scratch/groups/jzeitzer/UKBB/Data/Raw/
+DATACOMM=/scratch/groups/jzeitzer/UKBB/Data/Commands/
+INPUT=/scratch/groups/jzeitzer/UKBB/Data/Commands/inputUKBB.txt
 
 # Export Environment variables
 export DATARAW
@@ -21,9 +21,9 @@ for i in $(seq 0 $(( ${NUMINPUT} - 1 ))); do
         if [ $i \> 9 ];
         then
             Nm=$(($i - 10))
-            sbatch -n 1 -t 18:00:00 --wrap="./ukbfetch -b${FILE} -ak63099r43661.ukbkey" --job-name=getDATA_${i} --dependency=afterany:getDATA_${Nm}
+            sbatch -n 1 -t 18:00:00 --wrap="./ukbfetch -b${FILE} -ak63099r51627.key" --job-name=getDATA_${i} --dependency=afterany:getDATA_${Nm}
         else
-            sbatch -n 1 -t 18:00:00 --wrap="./ukbfetch -b${FILE} -ak63099r43661.ukbkey" --job-name=getDATA_${i}
+            sbatch -n 1 -t 18:00:00 --wrap="./ukbfetch -b${FILE} -ak63099r51627.key" --job-name=getDATA_${i}
         fi;
     done
 done

@@ -9,13 +9,13 @@ fcomm = getenv('FILE');
 % Get list of files to run
 fns = importdata(fcomm);
 
-% number of parallel pool workers (usually 20 for 1 node on sherlock)
-%parpool('local', 20, 'AttachedFiles', {fullfile(dcode,'gapDur.m'),fullfile(dcode,'medianImputation.m')})
-
 % Loop through list of files
 for i = 1:length(fns)
     try
-        files = gunzip(fullfile(dpath,fns{i}));
+        if strcomp(fns{i}(end-2:end),'.gz')
+            files = gunzip(fullfile(dpath,fns{i}));
+        end
+	
         dt = readtable(files{1},'Delimiter', ',');
         dt2 = readtable(files{1});
         ttt=[];
@@ -31,6 +31,7 @@ for i = 1:length(fns)
             dt.acc_med = dt.acc;
         end
         writetable(dt,fullfile(dpath,fns{i}),'Delimiter',',')
+	delete fullfile(dpath,fns{i})
     catch
     end
 end

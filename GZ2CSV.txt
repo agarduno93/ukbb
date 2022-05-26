@@ -1,0 +1,9 @@
+#!/bin/bash
+#SBATCH --time=01:00:00
+#SBATCH --nodes=1
+#SBATCH --job-name=GZ2CSV
+
+cd /scratch/groups/jzeitzer/UKBB/Data/Outputs/timeSeries/
+
+for f in *.gz ; do gunzip -c "$f" > /scratch/groups/jzeitzer/UKBB/Data/Outputs/timeSeries/"${f%.*}" ; done
+

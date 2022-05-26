@@ -16,7 +16,7 @@ new_cmds = [line + "-timeSeries.csv.gz" for line in csv if line not in imp]
 
 numLines = len(new_cmds)
 print(numLines)
-if numLines > 1:
+if numLines > 0:
     if numLines < numFiles:
         numFiles = numLines
     chunkLines = math.ceil(numLines/numFiles)
@@ -31,8 +31,9 @@ if numLines > 1:
             f.writelines( "%s\n" % item for item in ln )
             f.close()
     else:            
-        ln = new_cmds
-        filename = path_comm +'/inputImp_1.txt'
-        f = open(filename, 'w')
-        f.writelines( "%s\n" % item for item in ln )
-        f.close()
+        for i in range (numFiles):
+            ln = new_cmds[i]
+            filename = path_comm +'/inputImp_' + str(i) + '.txt'
+            f = open(filename, 'w')
+            f.writelines( ln )
+            f.close()       
