@@ -10,6 +10,17 @@ export DATARAW
 export DATACOMM
 export INPUT
 
+# Load modules
+#module purge
+#pip install --upgrade pip # Upgrades pip version if required
+#pip3 install --upgrade -r requirements.txt # Installs a known working set of dependencies, other package versions may also work
+ml python/3.6.1
+ml py-numpy/1.18.1_py36
+ml py-scipy/1.4.1_py36
+ml py-scikit-learn/0.24.2_py36
+ml py-pandas/1.0.3_py36
+ml java
+
 # Chunk input file into 10 jobs
 python3 /scratch/groups/jzeitzer/UKBB/Code/ukbb/chunkInput.py
 

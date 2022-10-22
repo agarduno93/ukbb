@@ -1,3 +1,4 @@
+
 import os
 import math
 import subprocess
@@ -31,5 +32,5 @@ for i in range (numFiles):
     f.close()
 
 os.environ["NUMINPUT"] = str(numFiles)
-subprocess.call('export NUMINPUT', shell=True)
-print(numFiles)
+exNum = subprocess.call('export NUMINPUT', shell=True)
+print(exNum)
