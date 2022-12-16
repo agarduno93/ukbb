@@ -25,10 +25,10 @@ for i = 1:length(fns)
         dt = readtable(fcomm2);
         dt2 = dt;
         ttt=[];
-        for jj = 1:length(dt2.TIMESTAMP_LOC)
+        for jj = 1:length(dt2.Time_POSIX)
         %ttt = [ttt;datetime(dt2.Var1(jj)) + duration(dt2.Var2{jj}(1:12))];
         %add 15 seonds to datetime;
-        ttt = [ttt;datetime(dt2.Time_POSIX(jj),'InputFormat','MM/dd/yyyy hh:mm:ss a')];
+        ttt = [ttt;datetime(dt2.Time_POSIX(jj),'InputFormat','MM/dd/yyyy hh:mm:ss a') + duration(0,1,0)];
         end
         
         dt.VM;
