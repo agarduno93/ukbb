@@ -23,6 +23,7 @@ python3 /mnt/c/Users/Alexis\ Garduno/Dropbox/WHI_RAR_Accelerometry/GitHub/chunkM
 
 #  Run runMedDay program on each file outside of cluster
 cd $CODEUKBB
+#export PATH=/mnt/c/Program\ Files/MATLAB/R2022b/bin:$PATH
 for FILE in $DATACOMM/inputMedDay_*.txt; do
     echo ${FILE}
     export FILE

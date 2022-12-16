@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Set file paths
+set DATACSV="C:\Users\Alexis Garduno\Dropbox\WHI_RAR_Accelerometry\DATACSV"
+set DATAMEDDAY="C:\Users\Alexis Garduno\Dropbox\WHI_RAR_Accelerometry\Data\MedDay"
+set DATACOMM="C:\Users\Alexis Garduno\Dropbox\WHI_RAR_Accelerometry\Commands"
+set CODEUKBB="C:\Users\Alexis Garduno\Dropbox\WHI_RAR_Accelerometry\GitHub"
+
+# Make sure directories exist
+mkdir -p %DATACSV%
+mkdir -p %DATACOMM%
+mkdir -p %DATAMEDDAY%
+
+# Generate input files 
+cd %DATACOMM%
+python3 "C:\Users\Alexis Garduno\Dropbox\WHI_RAR_Accelerometry\GitHub\chunkMedDay.py"
+
+#  Run runMedDay program on each file outside of cluster
+cd %CODEUKBB%
+#export PATH=/mnt/c/Program\ Files/MATLAB/R2022b/bin:$PATH
+for FILE in %DATACOMM%/inputMedDay_*.txt; do
+    set ${FILE}
+    set FILE
+    matlab -nodisplay < runMedDay.m
+done
