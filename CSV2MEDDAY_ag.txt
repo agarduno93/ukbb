@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Set file paths
+DATACSV=C://Users//Alexis Garduno//Dropbox//WHI_RAR_Accelerometry//DATACSV
+DATAMEDDAY=C://Users//Alexis Garduno//Dropbox//Data/MedDay
+DATACOMM=C://Users//Alexis Garduno//Dropbox//Commands
+CODEUKBB=C://Users//Alexis Garduno//Dropbox//WHI_RAR_Accelerometry//GitHub
+
+# Export environment variables
+export DATACSV
+export DATACOMM
+export CODEUKBB
+export DATAMEDDAY
+
+# Make sure directories exist
+mkdir -p $DATACSV
+mkdir -p $DATACOMM
+mkdir -p $DATAMEDDAY
+
+# Generate input files 
+cd $DATACOMM
+python3 $CODEUKBB/chunkMedDay.py
+
+# 
+cd $CODEUKBB
+for FILE in $DATACOMM/inputMedDay_*.txt; do
+    echo ${FILE}
+    export FILE
+    bash $CODEUKBB/runMedDay.txt #runoutside the cluster
+done
