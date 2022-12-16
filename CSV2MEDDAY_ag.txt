@@ -1,10 +1,14 @@
 #!/bin/bash
 
+# Check if directories exist, make directories if does not exist
+![ -d "/mnt/c/Users/Alexis Garduno/Dropbox/Data/MedDay"] && mkdir -p "/mnt/c/Users/Alexis Garduno/Dropbox/Data/MedDay"
+![ -d "/mnt/c/Users/Alexis Garduno/Dropbox/Commands"] && mkdir -p "/mnt/c/Users/Alexis Garduno/Dropbox/Commands"
+
 # Set file paths
-DATACSV=C://Users//Alexis Garduno//Dropbox//WHI_RAR_Accelerometry//DATACSV
-DATAMEDDAY=C://Users//Alexis Garduno//Dropbox//Data/MedDay
-DATACOMM=C://Users//Alexis Garduno//Dropbox//Commands
-CODEUKBB=C://Users//Alexis Garduno//Dropbox//WHI_RAR_Accelerometry//GitHub
+DATACSV=/mnt/c/Users/Alexis Garduno/Dropbox/WHI_RAR_Accelerometry/DATACSV
+DATAMEDDAY=/mnt/c/Users/Alexis Garduno/Dropbox/Data/MedDay
+DATACOMM=/mnt/c/Users/Alexis Garduno/Dropbox/Commands
+CODEUKBB=/mnt/c/Users/Alexis Garduno/Dropbox/WHI_RAR_Accelerometry/GitHub
 
 # Export environment variables
 export DATACSV
